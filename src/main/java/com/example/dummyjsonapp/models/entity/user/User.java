@@ -21,7 +21,7 @@ public class User {
     private String name;
     private String surname;
     private String email;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     public User() {

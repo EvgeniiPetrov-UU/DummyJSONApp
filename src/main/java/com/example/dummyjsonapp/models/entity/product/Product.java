@@ -44,7 +44,7 @@ public class Product {
     private String shippingInformation;
     @Enumerated(EnumType.STRING)
     private AvailabilityStatus availabilityStatus;
-    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
     @Enumerated(EnumType.STRING)
     private ReturnPolicy returnPolicy;
@@ -53,9 +53,11 @@ public class Product {
     @JoinColumn(name = "meta_id")
     private Meta meta;
     @ElementCollection
-    @CollectionTable(name = "product_images",
-            joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "images")
+    @CollectionTable(
+            name = "product_images",
+            joinColumns = @JoinColumn(name = "product_id")
+    )
+    @Column(name = "image_url")
     private List<String> images;
     private String thumbnail; //Миниатюра
 
