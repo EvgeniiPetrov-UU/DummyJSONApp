@@ -1,6 +1,6 @@
 package com.example.dummyjsonapp.models.entity.user;
 
-import com.example.dummyjsonapp.models.entity.Review;
+import com.example.dummyjsonapp.models.entity.product.Review;
 import jakarta.persistence.*;
 
 import java.util.List;

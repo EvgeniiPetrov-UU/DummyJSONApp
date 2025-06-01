@@ -1,6 +1,5 @@
-package com.example.dummyjsonapp.models.entity;
+package com.example.dummyjsonapp.models.entity.product;
 
-import com.example.dummyjsonapp.models.entity.product.Product;
 import com.example.dummyjsonapp.models.entity.user.User;
 import jakarta.persistence.*;
 
