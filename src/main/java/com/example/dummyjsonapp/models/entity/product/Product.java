@@ -37,7 +37,7 @@ public class Product {
     private String brand;
     private String sku; //Артикул
     private Double weight;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "dimensions_id")
     private Dimensions dimensions;
     private String warrantyInformation;
@@ -49,7 +49,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ReturnPolicy returnPolicy;
     private Integer minimumOrderQuantity;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "meta_id")
     private Meta meta;
     @ElementCollection
