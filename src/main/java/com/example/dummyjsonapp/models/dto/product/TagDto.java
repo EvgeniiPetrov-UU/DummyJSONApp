@@ -1,5 +1,5 @@
 package com.example.dummyjsonapp.models.dto.product;
 
-public record TagDTO(
+public record TagDto(
         String name
 ) {}

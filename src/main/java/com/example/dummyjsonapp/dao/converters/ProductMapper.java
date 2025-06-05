@@ -1,6 +1,6 @@
 package com.example.dummyjsonapp.dao.converters;
 
-import com.example.dummyjsonapp.models.dto.product.ProductDTO;
+import com.example.dummyjsonapp.models.dto.product.ProductDto;
 import com.example.dummyjsonapp.models.entity.product.Product;
 import com.example.dummyjsonapp.models.entity.product.Tag;
 import org.mapstruct.Mapper;
@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 )
 public interface ProductMapper {
 
-    ProductDTO toDTO(Product product);
-    Product toEntity(ProductDTO productDTO);
+    ProductDto toDTO(Product product);
+    Product toEntity(ProductDto productDTO);
 
     default Set<String> mapTags(Set<Tag> tags) {
         if (tags == null) {

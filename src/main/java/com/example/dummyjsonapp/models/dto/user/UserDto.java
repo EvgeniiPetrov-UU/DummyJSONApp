@@ -1,6 +1,6 @@
 package com.example.dummyjsonapp.models.dto.user;
 
-public record UserDTO(
+public record UserDto(
         String name,
         String email
 ) {}

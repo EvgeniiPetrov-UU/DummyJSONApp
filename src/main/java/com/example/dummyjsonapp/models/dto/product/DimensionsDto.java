@@ -1,6 +1,6 @@
 package com.example.dummyjsonapp.models.dto.product;
 
-public record DimensionsDTO(
+public record DimensionsDto(
         Double width,
         Double height,
         Double depth

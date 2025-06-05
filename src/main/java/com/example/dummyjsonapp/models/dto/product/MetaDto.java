@@ -2,7 +2,7 @@ package com.example.dummyjsonapp.models.dto.product;
 
 import java.time.ZonedDateTime;
 
-public record MetaDTO(
+public record MetaDto(
         ZonedDateTime createdAt,
         ZonedDateTime updatedAt,
         String barcode,

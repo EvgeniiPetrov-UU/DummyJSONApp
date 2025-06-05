@@ -2,7 +2,7 @@ package com.example.dummyjsonapp.models.dto.product;
 
 import java.time.ZonedDateTime;
 
-public record ReviewDTO(
+public record ReviewDto(
         Integer rating,
         String comment,
         ZonedDateTime date,

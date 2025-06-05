@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
-public record ProductDTO(
+public record ProductDto(
         Long id,
         String title,
         String description,
@@ -20,14 +20,14 @@ public record ProductDTO(
         String brand,
         String sku,
         Double weight,
-        DimensionsDTO dimensions,
+        DimensionsDto dimensions,
         String warrantyInformation,
         String shippingInformation,
         AvailabilityStatus availabilityStatus,
-        List<ReviewDTO> reviews,
+        List<ReviewDto> reviews,
         ReturnPolicy returnPolicy,
         Integer minimumOrderQuantity,
-        MetaDTO meta,
+        MetaDto meta,
         List<String> images,
         String thumbnail
 ) {}
