@@ -24,6 +24,7 @@ public class Product {
     private String description;
     private String category;
     private BigDecimal price;
+    @Column(name = "discount_percentage")
     private Double discountPercentage;
     private Double rating;
     private Integer stock;
@@ -40,14 +41,19 @@ public class Product {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "dimensions_id")
     private Dimensions dimensions;
+    @Column(name = "warranty_information")
     private String warrantyInformation;
+    @Column(name = "shipping_information")
     private String shippingInformation;
+    @Column(name = "availability_status")
     @Enumerated(EnumType.STRING)
     private AvailabilityStatus availabilityStatus;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
+    @Column(name = "return_policy")
     @Enumerated(EnumType.STRING)
     private ReturnPolicy returnPolicy;
+    @Column(name = "minimum_order_quantity")
     private Integer minimumOrderQuantity;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "meta_id")
@@ -276,31 +282,16 @@ public class Product {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if ((o == null) || (getClass() != o.getClass())) return false;
         Product product = (Product) o;
-        return id.equals(product.id) && title.equals(product.title)
-                && description.equals(product.description)
-                && category.equals(product.category)
-                && price.equals(product.price)
-                && Objects.equals(discountPercentage, product.discountPercentage)
-                && rating.equals(product.rating) && stock.equals(product.stock)
-                && tags.equals(product.tags) && brand.equals(product.brand)
-                && sku.equals(product.sku) && weight.equals(product.weight)
-                && dimensions.equals(product.dimensions)
-                && warrantyInformation.equals(product.warrantyInformation)
-                && shippingInformation.equals(product.shippingInformation)
-                && availabilityStatus == product.availabilityStatus
-                && Objects.equals(reviews, product.reviews)
-                && returnPolicy == product.returnPolicy
-                && minimumOrderQuantity.equals(product.minimumOrderQuantity);
+        return (title.equals(product.title)) &&
+                (brand.equals(product.brand)) &&
+                (sku.equals(product.sku));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, category, price,
-                discountPercentage, rating, stock, tags, brand, sku,
-                weight, dimensions, warrantyInformation, shippingInformation,
-                availabilityStatus, reviews, returnPolicy, minimumOrderQuantity);
+        return Objects.hash(title, brand, sku);
     }
 
     @Override

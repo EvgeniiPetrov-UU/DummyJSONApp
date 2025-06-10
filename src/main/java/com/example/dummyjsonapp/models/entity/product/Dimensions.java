@@ -69,9 +69,10 @@ public class Dimensions {
         if (this == obj) return true;
         if ((obj == null) || (getClass() != obj.getClass())) return true;
         Dimensions dimensions = (Dimensions) obj;
-        return (dimensions.id.equals(id)) && Objects.equals(dimensions.width, width)
-                && Objects.equals(dimensions.height, height)
-                && Objects.equals(dimensions.depth, depth);
+        return (dimensions.id.equals(id)) &&
+                Objects.equals(dimensions.width, width) &&
+                Objects.equals(dimensions.height, height) &&
+                Objects.equals(dimensions.depth, depth);
     }
 
     @Override

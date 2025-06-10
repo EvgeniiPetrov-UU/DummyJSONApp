@@ -2,8 +2,9 @@ package com.example.dummyjsonapp.models.entity.product;
 
 import com.example.dummyjsonapp.models.entity.user.User;
 import jakarta.persistence.*;
+import org.hibernate.HibernateException;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -20,19 +21,20 @@ public class Review {
     private Long id;
     private Byte rating;
     private String comment;
-    private ZonedDateTime date;
+    @Column(updatable = false)
+    private Instant date;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", updatable = false)
     private User reviewer;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", updatable = false)
     private Product product;
 
     public Review() {
 
     }
 
-    public Review(Long id, Byte rating, String comment, ZonedDateTime date,
+    public Review(Long id, Byte rating, String comment, Instant date,
                   User reviewer, Product product) {
         this.id = id;
         this.rating = rating;
@@ -40,6 +42,24 @@ public class Review {
         this.date = date;
         this.reviewer = reviewer;
         this.product = product;
+    }
+
+    //При создании нового пользователем нового отзыва записывается текущее время
+    @PrePersist
+    private void prePersist() {
+        if (this.date == null) {
+            this.date = Instant.now();
+        }
+    }
+
+    //Этот метод нужен для защиты от LazyInitializationException
+    protected String getReviewerEmail() {
+        if (reviewer == null) return null;
+        try {
+            return reviewer.getEmail();
+        } catch (HibernateException e) {
+            return null; //Можно выбросить свое исключение, хотя надо подумать
+        }
     }
 
     public Long getId() {
@@ -66,11 +86,11 @@ public class Review {
         this.comment = comment;
     }
 
-    public ZonedDateTime getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(ZonedDateTime date) {
+    public void setDate(Instant date) {
         this.date = date;
     }
 
@@ -78,7 +98,8 @@ public class Review {
         return reviewer;
     }
 
-    public void setReviewer(User reviewer) {
+    //Сеттер только для Hibernate
+    protected void setReviewer(User reviewer) {
         this.reviewer = reviewer;
     }
 
@@ -91,20 +112,18 @@ public class Review {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if ((obj == null) || (getClass() != obj.getClass())) return false;
-
-        Review review = (Review) obj;
-
-        return (review.id.equals(id)) && (review.rating.equals(rating))
-                && (Objects.equals(review.comment, comment)) && (review.date.equals(date))
-                && (review.reviewer.equals(reviewer)) && (review.product.equals(product));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if ((o == null) || (getClass() != o.getClass())) return false;
+        Review review = (Review) o;
+        return (rating.equals(review.rating)) &&
+                (date.equals(review.date)) &&
+                Objects.equals(getReviewerEmail(), review.getReviewerEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, rating, comment, date, reviewer, product);
+        return Objects.hash(rating, date, getReviewerEmail());
     }
 
     @Override

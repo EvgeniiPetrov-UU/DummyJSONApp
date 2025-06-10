@@ -2,7 +2,7 @@ package com.example.dummyjsonapp.models.entity.product;
 
 import jakarta.persistence.*;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -17,8 +17,10 @@ public class Meta {
             allocationSize = 5
     )
     private Long id;
-    private ZonedDateTime createdAt;
-    private ZonedDateTime updatedAt;
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt;
+    @Column(name = "updated_at")
+    private Instant updatedAt;
     private String barcode;
     private String qrCode;
 
@@ -26,13 +28,29 @@ public class Meta {
 
     }
 
-    public Meta(Long id, ZonedDateTime createdAt, ZonedDateTime updatedAt,
+    public Meta(Long id, Instant createdAt, Instant updatedAt,
                 String barcode, String qrCode) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.barcode = barcode;
         this.qrCode = qrCode;
+    }
+
+    /*
+    Этот метод обратного вызова перед созданием сущности должен проверить
+    проинициализировано ли уже поле (это может произойти, если DTO объект Meta
+    конвертируется в сущность, то есть сущность Product импортируется с помощью
+    стороннего API и является уже полностью готовой). Если поле не проинициали-
+    зировано, то создается новая сущность Product, поэтому нужно проинициализи-
+    ровать это поле автоматически.
+     */
+    @PrePersist
+    private void prePersist() {
+        if ((this.createdAt == null) && (this.updatedAt == null)) {
+            this.createdAt = Instant.now();
+            this.updatedAt = Instant.now();
+        }
     }
 
     public Long getId() {
@@ -43,19 +61,19 @@ public class Meta {
         this.id = id;
     }
 
-    public ZonedDateTime getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(ZonedDateTime createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
-    public ZonedDateTime getUpdatedAt() {
+    public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(ZonedDateTime updatedAt) {
+    public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -76,18 +94,16 @@ public class Meta {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if ((obj == null) || (getClass() != obj.getClass())) return false;
-        Meta meta = (Meta) obj;
-        return (meta.id.equals(id)) && (meta.createdAt.equals(createdAt))
-                && (meta.updatedAt.equals(updatedAt)) && (meta.barcode.equals(barcode))
-                && (meta.qrCode.equals(qrCode));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if ((o == null) || (getClass() != o.getClass())) return false;
+        Meta meta = (Meta) o;
+        return (id.equals(meta.id)) && (createdAt.equals(meta.createdAt));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdAt, updatedAt, barcode, qrCode);
+        return Objects.hash(id, createdAt);
     }
 
     @Override

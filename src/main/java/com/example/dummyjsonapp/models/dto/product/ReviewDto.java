@@ -1,11 +1,11 @@
 package com.example.dummyjsonapp.models.dto.product;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 public record ReviewDto(
-        Integer rating,
+        Byte rating,
         String comment,
-        ZonedDateTime date,
+        Instant date,
         String reviewerName,
         String reviewerEmail
 ) {}

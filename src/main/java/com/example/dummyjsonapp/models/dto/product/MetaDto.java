@@ -1,10 +1,10 @@
 package com.example.dummyjsonapp.models.dto.product;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 public record MetaDto(
-        ZonedDateTime createdAt,
-        ZonedDateTime updatedAt,
+        Instant createdAt,
+        Instant updatedAt,
         String barcode,
         String qrCode
 ) {}

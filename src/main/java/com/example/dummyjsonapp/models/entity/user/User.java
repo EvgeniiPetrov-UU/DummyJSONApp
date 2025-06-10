@@ -84,13 +84,12 @@ public class User {
         User user = (User) o;
         return id.equals(user.id) && name.equals(user.name)
                 && surname.equals(user.surname)
-                && email.equals(user.email)
-                && Objects.equals(reviews, user.reviews);
+                && email.equals(user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, email, reviews);
+        return Objects.hash(id, name, surname, email);
     }
 
     @Override
