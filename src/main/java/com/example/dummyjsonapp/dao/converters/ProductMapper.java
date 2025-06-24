@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public interface ProductMapper {
 
     ProductDto toDTO(Product product);
-    Product toEntity(ProductDto productDTO);
+    Product toEntity(ProductDto productDto);
 
     default Set<String> mapTags(Set<Tag> tags) {
         if (tags == null) {

@@ -5,6 +5,8 @@ import com.example.dummyjsonapp.dao.converters.DimensionsMapper;
 import com.example.dummyjsonapp.dao.converters.MetaMapper;
 import com.example.dummyjsonapp.dao.converters.ProductMapper;
 import com.example.dummyjsonapp.models.dto.product.ProductDto;
+import com.example.dummyjsonapp.models.entity.AvailabilityStatus;
+import com.example.dummyjsonapp.models.entity.ReturnPolicy;
 import com.example.dummyjsonapp.models.entity.product.Product;
 import com.example.dummyjsonapp.service.abstracts.entity.ProductService;
 import jakarta.persistence.EntityNotFoundException;
@@ -80,8 +82,11 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.get()
                 .setShippingInformation(productDto.shippingInformation());
         existingProduct.get()
-                .setAvailabilityStatus(productDto.availabilityStatus()); //Enum
-        existingProduct.get().setReturnPolicy(productDto.returnPolicy()); //Enum
+                .setAvailabilityStatus(AvailabilityStatus
+                        .valueOf(productDto.availabilityStatus()));
+        existingProduct.get()
+                .setReturnPolicy(ReturnPolicy
+                        .valueOf(productDto.returnPolicy()));
         existingProduct.get()
                 .setMinimumOrderQuantity(productDto.minimumOrderQuantity());
         existingProduct.get().setMeta(metaMapper.toEntity(productDto.meta()));
